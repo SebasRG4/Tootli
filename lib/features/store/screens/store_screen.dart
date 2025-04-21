@@ -233,6 +233,7 @@ class _StoreScreenState extends State<StoreScreen> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
                                       child: Stack(children: [
+                                        
                                         CustomImage(
                                           image: '${store.logoFullUrl}',
                                           height: 60 - (scrollingRate * 15), width: 70 - (scrollingRate * 15), fit: BoxFit.cover,

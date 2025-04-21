@@ -54,15 +54,24 @@ class _ItemsViewState extends State<ItemsView> {
       !isNull ? length > 0 ? GridView.builder(
         key: UniqueKey(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
-          mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
+          crossAxisSpacing: ResponsiveHelper.isDesktop(context) 
+          ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
+          mainAxisSpacing: ResponsiveHelper.isDesktop(context) 
+          ? Dimensions.paddingSizeExtremeLarge : widget.stores != null && widget.isStore ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
           // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
           //     : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 2 : 3.8
           //     : 3.3,
           mainAxisExtent: ResponsiveHelper.isDesktop(context) && widget.isStore ? 220
               : ResponsiveHelper.isMobile(context) ? widget.stores != null && widget.isStore ? 200 : 122
               : 122,
-          crossAxisCount: ResponsiveHelper.isMobile(context) ? 1 : ResponsiveHelper.isDesktop(context) && widget.stores != null  ? 3 : 3,
+          crossAxisCount: 
+    // Si es móvil
+    ResponsiveHelper.isMobile(context) 
+        ? (widget.isStore ? 1 : 1)  // 1 columna para tiendas, 2 columnas para artículos de restaurante en móvil
+        // Si es escritorio
+        : ResponsiveHelper.isDesktop(context) && widget.stores != null 
+            ? 3  // 3 columnas para tiendas en escritorio
+            : 4, // 4 columnas para artículos de restaurante en escritorio
         ),
         physics: widget.isScrollable ? const BouncingScrollPhysics() : const NeverScrollableScrollPhysics(),
         shrinkWrap: widget.isScrollable ? false : true,
@@ -84,8 +93,10 @@ class _ItemsViewState extends State<ItemsView> {
       ) : GridView.builder(
         key: UniqueKey(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
-          mainAxisSpacing: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
+          crossAxisSpacing: ResponsiveHelper.isDesktop(context) 
+          ? Dimensions.paddingSizeExtremeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeLarge,
+          mainAxisSpacing: ResponsiveHelper.isDesktop(context) 
+          ? Dimensions.paddingSizeLarge : widget.stores != null ? Dimensions.paddingSizeLarge : Dimensions.paddingSizeSmall,
           // childAspectRatio: ResponsiveHelper.isDesktop(context) && widget.isStore ? (1/0.6)
           //     : ResponsiveHelper.isMobile(context) ? widget.isStore ? 2 : 3.8
           //     : 3,

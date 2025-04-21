@@ -31,7 +31,8 @@ class PopularStoreView extends StatelessWidget {
       List<Store>? storeList = isFeatured ? storeController.featuredStoreList : isPopular ? storeController.popularStoreList
           : storeController.latestStoreList;
 
-      return (storeList != null && storeList.isEmpty) ? const SizedBox() : Column(
+      return (storeList != null && storeList.isEmpty) ? const SizedBox() : 
+      Column(
         children: [
           Padding(
             padding: EdgeInsets.fromLTRB(10, isPopular ? 2 : 15, 10, 10),
@@ -43,118 +44,118 @@ class PopularStoreView extends StatelessWidget {
           ),
 
           SizedBox(
-            height: 160,
-            child: storeList != null ? ListView.builder(
-              controller: ScrollController(),
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
-              itemCount: storeList.length > 10 ? 10 : storeList.length,
-              itemBuilder: (context, index){
-                return Padding(
-                  padding: const EdgeInsets.only(right: Dimensions.paddingSizeDefault, bottom: 5),
-                  child: Container(
-                    width: 200,
-                    margin: const EdgeInsets.only(top: Dimensions.paddingSizeExtraSmall),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).cardColor,
-                      borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                      boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withValues(alpha: 0.15), blurRadius: 7, spreadRadius: 0)],
-                    ),
-                    child: CustomInkWell(
-                      onTap: () {
-                        if(isFeatured && Get.find<SplashController>().moduleList != null) {
-                          for(ModuleModel module in Get.find<SplashController>().moduleList!) {
-                            if(module.id == storeList[index].moduleId) {
-                              Get.find<SplashController>().setModule(module);
-                              break;
-                            }
-                          }
-                        }
-                        Get.toNamed(
-                          RouteHelper.getStoreRoute(id: storeList[index].id, page: isFeatured ? 'module' : 'store'),
-                          arguments: StoreScreen(store: storeList[index], fromModule: isFeatured),
-                        );
-                      },
-                      radius: Dimensions.radiusSmall,
-                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-
-                        Stack(children: [
-                          ClipRRect(
-                            borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusSmall)),
-                            child: CustomImage(
-                              image: '${storeList[index].coverPhotoFullUrl}',
-                              height: 90, width: 200, fit: BoxFit.cover,
-                            ),
-                          ),
-                          DiscountTag(
-                            discount: storeController.getDiscount(storeList[index]),
-                            discountType: storeController.getDiscountType(storeList[index]),
-                            freeDelivery: storeList[index].freeDelivery,
-                          ),
-                          storeController.isOpenNow(storeList[index]) ? const SizedBox() : const NotAvailableWidget(isStore: true),
-                          Positioned(
-                            top: Dimensions.paddingSizeExtraSmall, right: Dimensions.paddingSizeExtraSmall,
-                            child: GetBuilder<FavouriteController>(builder: (favouriteController) {
-                              bool isWished = favouriteController.wishStoreIdList.contains(storeList[index].id);
-                              return InkWell(
-                                onTap: () {
-                                  if(AuthHelper.isLoggedIn()) {
-                                    isWished ? favouriteController.removeFromFavouriteList(storeList[index].id, true)
-                                        : favouriteController.addToFavouriteList(null, storeList[index].id, true);
-                                  }else {
-                                    showCustomSnackBar('you_are_not_logged_in'.tr);
-                                  }
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                                  ),
-                                  child: Icon(
-                                    isWished ? Icons.favorite : Icons.favorite_border,  size: 15,
-                                    color: isWished ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
-                        ]),
-
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall),
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                              Text(
-                                storeList[index].name ?? '',
-                                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
-                                maxLines: 1, overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                              Text(
-                                storeList[index].address ?? '',
-                                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor),
-                                maxLines: 1, overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-
-                              RatingBar(
-                                rating: storeList[index].avgRating,
-                                ratingCount: storeList[index].ratingCount,
-                                size: 12,
-                              ),
-                            ]),
-                          ),
-                        ),
-
-                      ]),
-                    ),
-                  ),
-                );
-              },
-            ) : PopularStoreShimmer(storeController: storeController),
+  height: 500, // Ajusta la altura según sea necesario
+  child: storeList != null ? ListView.builder(
+    controller: ScrollController(),
+    physics: const BouncingScrollPhysics(),
+    scrollDirection: Axis.vertical, // Cambiado de horizontal a vertical
+    padding: const EdgeInsets.only(left: Dimensions.paddingSizeSmall),
+    itemCount: storeList.length > 10 ? 10 : storeList.length,
+    itemBuilder: (context, index){
+      return Padding(
+        padding: const EdgeInsets.only(right: Dimensions.paddingSizeSmall, bottom: Dimensions.paddingSizeDefault),
+        child: Container(
+          height: 250, // Ajusta la altura del contenedor
+          margin: const EdgeInsets.only(top: Dimensions.paddingSizeExtraSmall),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+            boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withValues(alpha: 0.15), blurRadius: 7, spreadRadius: 0)],
           ),
+          child: CustomInkWell(
+            onTap: () {
+              if(isFeatured && Get.find<SplashController>().moduleList != null) {
+                for(ModuleModel module in Get.find<SplashController>().moduleList!) {
+                  if(module.id == storeList[index].moduleId) {
+                    Get.find<SplashController>().setModule(module);
+                    break;
+                  }
+                }
+              }
+              Get.toNamed(
+                RouteHelper.getStoreRoute(id: storeList[index].id, page: isFeatured ? 'module' : 'store'),
+                arguments: StoreScreen(store: storeList[index], fromModule: isFeatured),
+              );
+            },
+            radius: Dimensions.radiusSmall,
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+
+              Stack(children: [
+                ClipRRect(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusSmall)),
+                  child: CustomImage(
+                    image: '${storeList[index].coverPhotoFullUrl}',
+                    height: 150, width: double.infinity, fit: BoxFit.cover,
+                  ),
+                ),
+                DiscountTag(
+                  discount: storeController.getDiscount(storeList[index]),
+                  discountType: storeController.getDiscountType(storeList[index]),
+                  freeDelivery: storeList[index].freeDelivery,
+                ),
+                storeController.isOpenNow(storeList[index]) ? const SizedBox() : const NotAvailableWidget(isStore: true),
+                Positioned(
+                  top: Dimensions.paddingSizeExtraSmall, right: Dimensions.paddingSizeExtraSmall,
+                  child: GetBuilder<FavouriteController>(builder: (favouriteController) {
+                    bool isWished = favouriteController.wishStoreIdList.contains(storeList[index].id);
+                    return InkWell(
+                      onTap: () {
+                        if(AuthHelper.isLoggedIn()) {
+                          isWished ? favouriteController.removeFromFavouriteList(storeList[index].id, true)
+                              : favouriteController.addToFavouriteList(null, storeList[index].id, true);
+                        }else {
+                          showCustomSnackBar('you_are_not_logged_in'.tr);
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(Dimensions.paddingSizeExtraSmall),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor, borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                        ),
+                        child: Icon(
+                          isWished ? Icons.favorite : Icons.favorite_border,  size: 15,
+                          color: isWished ? Theme.of(context).primaryColor : Theme.of(context).disabledColor,
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ]),
+
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeExtraSmall, vertical: Dimensions.paddingSizeExtraSmall),
+                  child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text(
+                      storeList[index].name ?? '',
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
+                      maxLines: 1, overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
+                    Text(
+                      storeList[index].address ?? '',
+                      style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor),
+                      maxLines: 1, overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+
+                    RatingBar(
+                      rating: storeList[index].avgRating,
+                      ratingCount: storeList[index].ratingCount,
+                      size: 12,
+                    ),
+                  ]),
+                ),
+              ),
+
+            ]),
+          ),
+        ),
+      );
+    },
+  ) : PopularStoreShimmer(storeController: storeController),
+),
         ],
       );
     });

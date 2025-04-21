@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "491987943015",
-    "project_id": "stackmart-500c7",
-    "storage_bucket": "stackmart-500c7.appspot.com"
+    "project_number": "126572465922",
+    "firebase_url": "https://califood-default-rtdb.firebaseio.com",
+    "project_id": "califood",
+    "storage_bucket": "califood.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491987943015:android:a6fb4303cc4bf3d18f1ec2",
+        "mobilesdk_app_id": "1:126572465922:android:5d48d019309bc688eebc1b",
         "android_client_info": {
-          "package_name": "com.sixamtech.sixam_mart_user"
+          "package_name": "com.AppiDito.Tienda"
         }
       },
       "oauth_client": [
         {
-          "client_id": "491987943015-agln6biv84krpnngdphj87jkko7r9lb8.apps.googleusercontent.com",
+          "client_id": "126572465922-j0sd6chqmi7pj2ui4vst5hln3bg20vqg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA"
+          "current_key": "AIzaSyAi0btJxosTAsgW2Vkvq6IBTvBc-CHC-24"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "491987943015-agln6biv84krpnngdphj87jkko7r9lb8.apps.googleusercontent.com",
+              "client_id": "126572465922-cucv51qdfe2e14r4t9bvtcs2j684beil.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "126572465922-3t9qd0pl258pjbdkuu5m1jr6g5iu3j63.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.CaliAdmin.CaliFoodAdmin"
+              }
             }
           ]
         }
@@ -36,28 +44,239 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:491987943015:android:de46aa9776b1b4888f1ec2",
+        "mobilesdk_app_id": "1:126572465922:android:3300a4cf2c87c449eebc1b",
         "android_client_info": {
-          "package_name": "com.sixamtech.stack_food_user"
+          "package_name": "com.AppiDito.Usuario"
         }
       },
       "oauth_client": [
         {
-          "client_id": "491987943015-agln6biv84krpnngdphj87jkko7r9lb8.apps.googleusercontent.com",
+          "client_id": "126572465922-b5h00cqv9suk9pafd3glocnhhe8siuv8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.AppiDito.Usuario",
+            "certificate_hash": "276509783f1465ee414a7ba35632d4befa657f64"
+          }
+        },
+        {
+          "client_id": "126572465922-j0sd6chqmi7pj2ui4vst5hln3bg20vqg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA"
+          "current_key": "AIzaSyAi0btJxosTAsgW2Vkvq6IBTvBc-CHC-24"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "491987943015-agln6biv84krpnngdphj87jkko7r9lb8.apps.googleusercontent.com",
+              "client_id": "126572465922-cucv51qdfe2e14r4t9bvtcs2j684beil.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "126572465922-3t9qd0pl258pjbdkuu5m1jr6g5iu3j63.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.CaliAdmin.CaliFoodAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126572465922:android:3aaac0c17b93f69aeebc1b",
+        "android_client_info": {
+          "package_name": "com.AppiDito.repartidor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126572465922-j0sd6chqmi7pj2ui4vst5hln3bg20vqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi0btJxosTAsgW2Vkvq6IBTvBc-CHC-24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126572465922-cucv51qdfe2e14r4t9bvtcs2j684beil.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126572465922-3t9qd0pl258pjbdkuu5m1jr6g5iu3j63.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.CaliAdmin.CaliFoodAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126572465922:android:60906c82169c40eceebc1b",
+        "android_client_info": {
+          "package_name": "com.CaliAdmin.CaliFoodAdmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126572465922-j0sd6chqmi7pj2ui4vst5hln3bg20vqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi0btJxosTAsgW2Vkvq6IBTvBc-CHC-24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126572465922-cucv51qdfe2e14r4t9bvtcs2j684beil.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126572465922-3t9qd0pl258pjbdkuu5m1jr6g5iu3j63.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.CaliAdmin.CaliFoodAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126572465922:android:7d1ee06d324f53f1eebc1b",
+        "android_client_info": {
+          "package_name": "com.CaliFood.CaliFoodusuarios"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126572465922-m0a94hfeumhebnif407567924i62uoep.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.CaliFood.CaliFoodusuarios",
+            "certificate_hash": "94a91a55acd15d070c8405bef198ad4ca361bacd"
+          }
+        },
+        {
+          "client_id": "126572465922-j0sd6chqmi7pj2ui4vst5hln3bg20vqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi0btJxosTAsgW2Vkvq6IBTvBc-CHC-24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126572465922-cucv51qdfe2e14r4t9bvtcs2j684beil.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126572465922-3t9qd0pl258pjbdkuu5m1jr6g5iu3j63.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.CaliAdmin.CaliFoodAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126572465922:android:fb751c2ad9725fdaeebc1b",
+        "android_client_info": {
+          "package_name": "com.CaliFoodRepartidor.CaliFoodRepartidor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126572465922-j0sd6chqmi7pj2ui4vst5hln3bg20vqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi0btJxosTAsgW2Vkvq6IBTvBc-CHC-24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126572465922-cucv51qdfe2e14r4t9bvtcs2j684beil.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126572465922-3t9qd0pl258pjbdkuu5m1jr6g5iu3j63.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.CaliAdmin.CaliFoodAdmin"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126572465922:android:0eeecf9f17e2c6e0eebc1b",
+        "android_client_info": {
+          "package_name": "com.CaliFoodRestaurante.CaliFoodRestaurante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126572465922-4vivtninpicjd1n6rst497vin195cff6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.CaliFoodRestaurante.CaliFoodRestaurante",
+            "certificate_hash": "2bf275ffaa6b74d59f3d956a24c45b9eed1c5bba"
+          }
+        },
+        {
+          "client_id": "126572465922-j0sd6chqmi7pj2ui4vst5hln3bg20vqg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAi0btJxosTAsgW2Vkvq6IBTvBc-CHC-24"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126572465922-cucv51qdfe2e14r4t9bvtcs2j684beil.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126572465922-3t9qd0pl258pjbdkuu5m1jr6g5iu3j63.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.CaliAdmin.CaliFoodAdmin"
+              }
             }
           ]
         }

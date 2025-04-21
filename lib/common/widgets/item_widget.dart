@@ -70,8 +70,13 @@ class ItemWidget extends StatelessWidget {
 
     return Stack(
       children: [
+        
+        
         Container(
-          margin: ResponsiveHelper.isDesktop(context) ? null : const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
+          
+          //margin: ResponsiveHelper.isDesktop(context) ? null :
+          //const EdgeInsets.only(bottom: Dimensions.paddingSizeExtremeLarge),
+          
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
             color: Theme.of(context).cardColor,
@@ -106,23 +111,38 @@ class ItemWidget extends StatelessWidget {
                 Get.find<ItemController>().navigateToItemPage(item, context, inStore: inStore, isCampaign: isCampaign);
               }
             },
+
             radius: Dimensions.radiusDefault,
-            padding: ResponsiveHelper.isDesktop(context) ? EdgeInsets.all(fromCartSuggestion ? Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall) : const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeSmall, vertical: Dimensions.paddingSizeExtraSmall),
+
+          padding: ResponsiveHelper.isDesktop(context) ? 
+            EdgeInsets.all(fromCartSuggestion ? 
+            Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall) : 
+            const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, 
+            
+            vertical: Dimensions.paddingSizeExtraSmall),
+
             child: TextHover(
               builder: (hovered) {
-                return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center, 
+                  children: [
+                    Expanded(child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: desktop ? 0 : 0),
+                    child: Row(
+                      
+                      children: [
 
-                  Expanded(child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: desktop ? 0 : Dimensions.paddingSizeExtraSmall),
-                    child: Row(children: [
-
+// IMAGEN DEL PRODUCTO
                       Stack(children: [
+                        // Imagen de producto
                         ClipRRect(
                           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                           child: CustomImage(
                             isHovered: hovered,
                             image: '${isStore ? store != null ? store!.logoFullUrl : '' : item!.imageFullUrl}',
-                            height: imageHeight ?? (desktop ? 120 : length == null ? 100 : 90), width: imageWidth ?? (desktop ? 120 : 90), fit: BoxFit.cover,
+                            height: imageHeight ?? 
+                            (desktop ? 120 : length == null ? 100 : 90), 
+                            width: imageWidth ?? (desktop ? 120 : 90), fit: BoxFit.cover,
                           ),
                         ),
 
@@ -148,18 +168,22 @@ class ItemWidget extends StatelessWidget {
                           }),
                         ),
                       ]),
-                      const SizedBox(width: Dimensions.paddingSizeSmall),
+                      //const SizedBox(width: Dimensions.paddingSizeSmall),
 
                       Expanded(
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
-
+                        child: 
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start, 
+                          children: [
                           Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
                             Flexible(
+                              // Texto del item
                               child: Text(
                                 isStore ? store!.name! : item!.name!,
                                 style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
                                 maxLines: 1, overflow: TextOverflow.ellipsis,
-                              ),
+                              )
                             ),
                             const SizedBox(width: Dimensions.paddingSizeExtraSmall),
 
@@ -276,6 +300,7 @@ class ItemWidget extends StatelessWidget {
                   )),
 
                 ]);
+                // Nuevo diseño
               }
             ),
           ),

@@ -160,10 +160,10 @@ class _ParcelCategoryScreenState extends State<ParcelCategoryScreen> {
                       ) : ParcelShimmer(isEnabled: parcelController.parcelCategoryList == null, isDeliveryItem: false),
                       const SizedBox(height: Dimensions.paddingSizeLarge),
 
-                      Align(
+                      /*Align(
                         alignment: Get.find<LocalizationController>().isLtr ? Alignment.centerLeft : Alignment.centerRight,
                         child: Text('easiest_way_to_get_services'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge)),
-                      ),
+                      ),*/
                       const SizedBox(height: Dimensions.paddingSizeLarge),
 
                       parcelController.videoContentDetails != null ? ResponsiveHelper.isDesktop(context) ? Row(crossAxisAlignment: CrossAxisAlignment.center, children: [

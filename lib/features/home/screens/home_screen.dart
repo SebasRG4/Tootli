@@ -43,6 +43,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/features/home/widgets/module_view.dart';
 import 'package:sixam_mart/features/parcel/screens/parcel_category_screen.dart';
+import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -261,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     surfaceTintColor: Theme.of(context).colorScheme.surface,
                     backgroundColor: ResponsiveHelper.isDesktop(context) ? Colors.transparent : Theme.of(context).colorScheme.surface,
                     title: Center(child: Container(
-                      width: Dimensions.webMaxWidth, height: Get.find<LocalizationController>().isLtr ? 60 : 70, color: Theme.of(context).colorScheme.surface,
+                      width: Dimensions.webMaxWidth, height: Get.find<LocalizationController>().isLtr ? 70 : 80, color: Theme.of(context).colorScheme.surface,
                       child: Row(children: [
                         (splashController.module != null && splashController.configModel!.module == null && splashController.moduleList != null && splashController.moduleList!.length != 1) ? InkWell(
                           onTap: () {
@@ -280,52 +281,44 @@ class _HomeScreenState extends State<HomeScreen> {
                               horizontal: ResponsiveHelper.isDesktop(context) ? Dimensions.paddingSizeSmall : 0,
                             ),
                             child: GetBuilder<LocationController>(builder: (locationController) {
-                              
                               return Column(
                                 children: [
-                                  Image.asset(Images.tootli, fit: BoxFit.contain),
-                                  //Ubicacion
-                                  //const SizedBox(height: 1,),
-                                  Row(crossAxisAlignment: CrossAxisAlignment.start, 
-                              children: [
-                                Text(
-                                  AuthHelper.isLoggedIn() ? 
-                                  AddressHelper.getUserAddressFromSharedPref()!.addressType!.tr : 'your_location'.tr,
-                                  style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyMedium!.color, fontSize: Dimensions.fontSizeDefault),
-                                  maxLines: 1, overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(width: 5,),
-                                Flexible(
+                                   Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
                                     child: Text(
-                                      AddressHelper.getUserAddressFromSharedPref()!.address!,
-                                      style: robotoBlack.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeDefault),
+                                      AuthHelper.isLoggedIn() ? 
+                                      AddressHelper.getUserAddressFromSharedPref()!.addressType!.tr : 'your_location'.tr,
+                                      style: robotoBlack.copyWith(color: Theme.of(context).textTheme.bodyLarge!.color, fontSize: Dimensions.fontSizeLarge),
                                       maxLines: 1, overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
-
-                                /*Row(children: [
-                                  Flexible(
-                                    child: Text(
-                                      AddressHelper.getUserAddressFromSharedPref()!.address!,
-                                      style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
-                                      maxLines: 1, overflow: TextOverflow.ellipsis,
+                                  const SizedBox(height: 5),
+                                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                                  
+                                  
+                                
+                                    //const SizedBox(width: 10,),
+                                
+                                    Flexible(
+                                      child: Center(
+                                        child: Text(
+                                          AddressHelper.getUserAddressFromSharedPref()!.address!,
+                                          style: robotoBold.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeDefault),
+                                          maxLines: 1, overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-
-                                  //Icon(Icons.expand_more, color: Theme.of(context).disabledColor, size: 18),
-
-                                ]),*/
-                              ]
-                              )
+                                
+                                    //Icon(Icons.expand_more, color: Theme.of(context).disabledColor, size: 18),
+                                
+                                  
+                                
+                                ]),
                                 ],
                               );
-          
-                              
-                              
                             }),
                           ),
                         )),
-                        //Icono de Notificacion (campana)
                         /*InkWell(
                           child: GetBuilder<NotificationController>(builder: (notificationController) {
                             return Stack(children: [
@@ -359,7 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           margin: const EdgeInsets.symmetric(vertical: 3),
                           decoration: BoxDecoration(
                             color: Theme.of(context).cardColor,
-                            border: Border.all(color: Theme.of(context).primaryColor.withValues(alpha: 0.2), width: 1),
+                            border: Border.all(color: Theme.of(context).primaryColor.withOpacity(0.2), width: 1),
                             borderRadius: BorderRadius.circular(25),
                             boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
                           ),
@@ -381,6 +374,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ))),
                   ) : const SliverToBoxAdapter(),
 
+                  // Modulos
                   SliverToBoxAdapter(
                     child: Center(child: SizedBox(
                       width: Dimensions.webMaxWidth,
@@ -404,7 +398,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       callback: (val) {
                         searchBgShow = val;
                       },
-                      child: const AllStoreFilterWidget(),
+                      child: 
+                      const AllStoreFilterWidget(),
                     ),
                   ) : const SliverToBoxAdapter(),
 

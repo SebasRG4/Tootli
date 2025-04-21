@@ -872,7 +872,7 @@ class NewVariationView extends StatelessWidget {
             item!.foodVariations![index].multiSelect! ? Text(
               '${'select_minimum'.tr} ${'${item!.foodVariations![index].min}'
                   ' ${'and_up_to'.tr} ${item!.foodVariations![index].max} ${'options'.tr}'}',
-              style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).disabledColor),
+              style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),
             ) : Text(
               'select_one'.tr,
               style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeExtraSmall, color: Theme.of(context).primaryColor),

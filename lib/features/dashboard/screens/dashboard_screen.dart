@@ -196,7 +196,7 @@ class DashboardScreenState extends State<DashboardScreen> {
                               const MenuScreen()
                             ];
                             return Container(
-                              width: size.width, height: GetPlatform.isIOS ? 80 : 65,
+                              width: size.width, height: GetPlatform.isIOS ? 90 : 75,
                               decoration: BoxDecoration(
                                 color: Theme.of(context).cardColor,
                                 borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusLarge)),

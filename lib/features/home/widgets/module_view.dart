@@ -33,42 +33,35 @@ class ModuleView extends StatelessWidget {
 
       splashController.moduleList != null ? splashController.moduleList!.isNotEmpty ? GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3, mainAxisSpacing: Dimensions.paddingSizeSmall,
+          crossAxisCount: 4, mainAxisSpacing: Dimensions.paddingSizeSmall,
           crossAxisSpacing: Dimensions.paddingSizeSmall, childAspectRatio: (1/1),
         ),
         padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
         itemCount: splashController.moduleList!.length,
         shrinkWrap: true, physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-              color: Theme.of(context).cardColor,
-              border: Border.all(color: Theme.of(context).primaryColor, width: 0.15),
-              boxShadow: [BoxShadow(color: Theme.of(context).primaryColor.withValues(alpha: 0.1), spreadRadius: 1, blurRadius: 3)],
-            ),
-            child: CustomInkWell(
-              onTap: () => splashController.switchModule(index, true),
-              radius: Dimensions.radiusDefault,
-              child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
-                  child: CustomImage(
-                    image: '${splashController.moduleList![index].iconFullUrl}',
-                    height: 50, width: 50,
-                  ),
+          // Modulos UI
+          return CustomInkWell(
+            onTap: () => splashController.switchModule(index, true),
+            radius: Dimensions.radiusDefault,
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          
+              ClipRRect(
+                borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
+                child: CustomImage(
+                  image: '${splashController.moduleList![index].iconFullUrl}',
+                  height: 50, width: 50,
                 ),
-                const SizedBox(height: Dimensions.paddingSizeSmall),
-
-                Center(child: Text(
-                  splashController.moduleList![index].moduleName!,
-                  textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis,
-                  style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
-                )),
-
-              ]),
-            ),
+              ),
+              const SizedBox(height: Dimensions.paddingSizeSmall),
+          
+              Center(child: Text(
+                splashController.moduleList![index].moduleName!,
+                textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis,
+                style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall),
+              )),
+          
+            ]),
           );
         },
       ) : Center(child: Padding(

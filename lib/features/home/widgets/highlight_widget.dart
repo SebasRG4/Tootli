@@ -36,72 +36,95 @@ class _HighlightWidgetState extends State<HighlightWidget> {
   Widget build(BuildContext context) {
     return GetBuilder<AdvertisementController>(builder: (advertisementController) {
       return advertisementController.advertisementList != null && advertisementController.advertisementList!.isNotEmpty ? Padding(
-        padding: const EdgeInsets.only(top: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeDefault),
+        padding: const EdgeInsets.only(
+          
+        //top: Dimensions.paddingSizeDefault, 
+        //bottom: Dimensions.paddingSizeDefault
+        ),
         child: Stack(
           children: [
 
             CustomAssetImageWidget(
               Get.isDarkMode ? Images.highlightDarkBg : Images.highlightBg, width: context.width,
               fit: BoxFit.cover,
+              borderRadius: 5
             ),
 
             Column(children: [
 
               Padding(
                 padding: const EdgeInsets.only(
-                  left: Dimensions.paddingSizeDefault, right: Dimensions.paddingSizeDefault, top: Dimensions.paddingSizeDefault, bottom: Dimensions.paddingSizeExtraSmall,
+                  left: Dimensions.paddingSizeDefault,
+                  right: Dimensions.paddingSizeDefault, 
+                  top: Dimensions.paddingSizeSmall, 
+                  //bottom: Dimensions.paddingSizeExtraSmall,
                 ),
-                child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
 
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('highlights_for_you'.tr, style: robotoBold.copyWith(fontSize: Dimensions.fontSizeLarge, color: Colors.black)),
+                      Text('highlights_for_you'.tr, 
+                      style: robotoBlack.copyWith(
+                        fontSize: Dimensions.fontSizeLarge, 
+                        color: Colors.white)),
+                      
                       const SizedBox(width: 5),
 
-                      Text('see_our_most_popular_store_and_item'.tr, style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall)),
+                      Text('see_our_most_popular_store_and_item'.tr, 
+                      style: robotoBold.copyWith(
+                        color: Theme.of(context).disabledColor, 
+                        fontSize: Dimensions.fontSizeSmall)),
                     ],
                   ),
 
-                  const CustomAssetImageWidget(
+                  /*const CustomAssetImageWidget(
                     Images.highlightIcon, height: 50, width: 50,
-                  ),
+                  ),*/
+
 
                 ]),
               ),
 
               CarouselSlider.builder(
-                carouselController: _carouselController,
-                itemCount: advertisementController.advertisementList!.length,
-                options: CarouselOptions(
-                  enableInfiniteScroll: advertisementController.advertisementList!.length > 1,
-                  autoPlay: advertisementController.autoPlay,
-                  enlargeCenterPage: false,
-                  height: 280,
-                  viewportFraction: 1,
-                  disableCenter: true,
-                  onPageChanged: (index, reason) {
-
-                    advertisementController.setCurrentIndex(index, true);
-
-                    if(advertisementController.advertisementList?[index].addType == "video_promotion"){
-                      advertisementController.updateAutoPlayStatus(status: false);
-                    }else{
-                      advertisementController.updateAutoPlayStatus(status: true);
-                    }
-
-                  },
-                ),
-                itemBuilder: (context, index, realIndex) {
-                  return advertisementController.advertisementList?[index].addType == 'video_promotion' ? HighlightVideoWidget(
-                    advertisement: advertisementController.advertisementList![index],
-                  ) : HighlightStoreWidget(advertisement: advertisementController.advertisementList![index]);
-                },
-              ),
+  carouselController: _carouselController,
+  itemCount: advertisementController.advertisementList!.length,
+  options: CarouselOptions(
+    enableInfiniteScroll: advertisementController.advertisementList!.length > 1,
+    autoPlay: advertisementController.autoPlay,
+    autoPlayInterval: const Duration(seconds: 15),
+    enlargeCenterPage: false,
+    height: 280,
+    viewportFraction: 1,
+    disableCenter: true,
+    onPageChanged: (index, reason) {
+      // Al cambiar de página, actualizar el índice actual
+      advertisementController.setCurrentIndex(index, true);
+      
+      // Actualizar el estado de reproducción automática según el tipo
+      if (advertisementController.advertisementList?[index].addType == "video_promotion") {
+        advertisementController.updateAutoPlayStatus(status: false);
+      } else {
+        advertisementController.updateAutoPlayStatus(status: true);
+      }
+    },
+  ),
+  itemBuilder: (context, index, realIndex) {
+    // Pasar el estado activo al widget de video
+    return advertisementController.advertisementList?[index].addType == 'video_promotion' 
+      ? HighlightVideoWidget(
+          advertisement: advertisementController.advertisementList![index],
+          isActive: advertisementController.currentIndex == index, // Pasar el estado activo
+        ) 
+      : HighlightStoreWidget(
+          advertisement: advertisementController.advertisementList![index]
+        );
+  },
+),
 
               const AdvertisementIndicator(),
 
-              const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
+              //const SizedBox(height: Dimensions.paddingSizeExtraSmall,),
 
             ]),
           ],
@@ -245,140 +268,307 @@ class HighlightStoreWidget extends StatelessWidget {
 
 class HighlightVideoWidget extends StatefulWidget {
   final AdvertisementModel advertisement;
-  const HighlightVideoWidget({super.key, required this.advertisement});
+  final bool isActive;
+  
+  const HighlightVideoWidget({
+    super.key, 
+    required this.advertisement,
+    this.isActive = true,
+  });
 
   @override
   State<HighlightVideoWidget> createState() => _HighlightVideoWidgetState();
 }
 
 class _HighlightVideoWidgetState extends State<HighlightVideoWidget> {
-
-  late VideoPlayerController videoPlayerController;
+  VideoPlayerController? _videoPlayerController;  // Hacer nullable
   ChewieController? _chewieController;
+  bool _isLoading = true;
+  bool _hasError = false;
+  bool _isDisposed = false;  // Flag para controlar si el widget está dispuesto
 
   @override
   void initState() {
     super.initState();
-    initializePlayer();
-
-    videoPlayerController.addListener(() {
-      if(videoPlayerController.value.duration == videoPlayerController.value.position){
-        if(GetPlatform.isWeb){
-          Future.delayed(const Duration(seconds: 4), () {
-            Get.find<AdvertisementController>().updateAutoPlayStatus(status: true, shouldUpdate: true);
-          });
-        }else{
-          Get.find<AdvertisementController>().updateAutoPlayStatus(status: true, shouldUpdate: true);
-        }
-      }
-    });
+    _initializePlayer();
   }
 
-  Future<void> initializePlayer() async {
-    videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(
-      widget.advertisement.videoAttachmentFullUrl ?? "",
-    ));
+  @override
+  void didUpdateWidget(HighlightVideoWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    
+    // Verificar que el controlador existe antes de usarlo
+    if (_videoPlayerController == null || _isDisposed) return;
+    
+    // Detectar cambios en el estado activo
+    if (widget.isActive != oldWidget.isActive) {
+      if (widget.isActive) {
+        // Este widget se activó, reanudar reproducción
+        _chewieController?.play();
+      } else {
+        // Este widget ya no está activo, pausar y silenciar completamente
+        _stopVideo();
+      }
+    }
+  }
 
-    await Future.wait([
-      videoPlayerController.initialize(),
-    ]);
+  Future<void> _initializePlayer() async {
+    if (_isDisposed) return;  // No continuar si el widget ya está dispuesto
+    
+    try {
+      final String videoUrl = widget.advertisement.videoAttachmentFullUrl ?? "";
+      if (videoUrl.isEmpty) {
+        if (!_isDisposed && mounted) {
+          setState(() {
+            _isLoading = false;
+            _hasError = true;
+          });
+        }
+        return;
+      }
 
-    _createChewieController();
-    setState(() {});
+      _videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
+
+      // Inicializa el controlador con un timeout para evitar bloqueos indefinidos
+      await _videoPlayerController?.initialize().timeout(
+        const Duration(seconds: 10),
+        onTimeout: () {
+          if (!_isDisposed && mounted) {
+            setState(() {
+              _isLoading = false;
+              _hasError = true;
+            });
+          }
+          return;
+        },
+      );
+
+      if (_isDisposed || !mounted) return;
+
+      // Verificar si el controlador fue inicializado correctamente
+      if (_videoPlayerController?.value.isInitialized ?? false) {
+        // Agregar listener para cuando el video termina
+        _videoPlayerController?.addListener(_videoListener);
+        
+        // Asegurarse de que el volumen está en cero inicialmente
+        await _videoPlayerController?.setVolume(0);
+
+        // Crear el controlador Chewie
+        _createChewieController();
+        
+        // Solo reproducir si este widget está activo
+        if (widget.isActive) {
+          _chewieController?.play();
+        } else {
+          _videoPlayerController?.pause();
+        }
+      } else {
+        _hasError = true;
+      }
+
+      if (!_isDisposed && mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (!_isDisposed && mounted) {
+        setState(() {
+          _isLoading = false;
+          _hasError = true;
+        });
+      }
+      debugPrint('Error al inicializar el video: $e');
+    }
+  }
+
+  void _videoListener() {
+    // Verificar si el widget o controlador están dispuestos
+    if (_isDisposed || _videoPlayerController == null) return;
+    
+    if (_videoPlayerController!.value.isInitialized &&
+        _videoPlayerController!.value.position >= _videoPlayerController!.value.duration - const Duration(milliseconds: 300)) {
+      // Video terminó o está cerca del final
+      final delay = GetPlatform.isWeb ? const Duration(seconds: 4) : Duration.zero;
+      Future.delayed(delay, () {
+        // Verificar que el controlador de anuncios todavía existe
+        if (!_isDisposed && Get.isRegistered<AdvertisementController>()) {
+          final advertisementController = Get.find<AdvertisementController>();
+          advertisementController.updateAutoPlayStatus(status: true, shouldUpdate: true);
+        }
+      });
+    }
   }
 
   void _createChewieController() {
+    if (_isDisposed || _videoPlayerController == null || !(_videoPlayerController!.value.isInitialized)) return;
+    
+    final aspectRatio = _videoPlayerController!.value.aspectRatio * 
+        (ResponsiveHelper.isDesktop(context) ? 1 : 1.3);
+    
     _chewieController = ChewieController(
-      videoPlayerController: videoPlayerController,
-      autoPlay: true,
-      aspectRatio: videoPlayerController.value.aspectRatio * (ResponsiveHelper.isDesktop(context) ? 1 : 1.3),
+      videoPlayerController: _videoPlayerController!,
+      autoPlay: widget.isActive,
+      aspectRatio: aspectRatio,
+      allowMuting: true,
+      errorBuilder: (context, errorMessage) {
+        return Center(
+          child: Text(
+            'Error al cargar el video',
+            style: TextStyle(color: Colors.white),
+          ),
+        );
+      },
     );
+    
+    // Configurar volumen a 0 (silencio)
     _chewieController?.setVolume(0);
+  }
+
+  // Parar completamente el video de manera segura
+  void _stopVideo() {
+    if (_isDisposed || _videoPlayerController == null) return;
+    
+    if (_videoPlayerController!.value.isInitialized) {
+      _videoPlayerController!.pause();
+      _videoPlayerController!.setVolume(0);
+      
+      // No usar seekTo si el widget está siendo dispuesto
+      if (!_isDisposed) {
+        _videoPlayerController!.seekTo(Duration.zero);
+      }
+    }
   }
 
   @override
   void dispose() {
+    // Marcar como dispuesto antes de cualquier operación
+    _isDisposed = true;
+    
+    // Remover listener de forma segura
+    if (_videoPlayerController != null) {
+      // Es seguro remover un listener incluso si no existe
+      _videoPlayerController!.removeListener(_videoListener);
+      _videoPlayerController!.dispose();
+    }
+    
+    _chewieController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AdvertisementController>(builder: (advertisementController) {
-      return Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-        height: 280,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-          color: Theme.of(context).cardColor,
-          border: Border.all(color: Theme.of(context).disabledColor.withValues(alpha: 0.07), width: 2),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      height: 280,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+        color: Theme.of(context).cardColor,
+        border: Border.all(
+          color: Theme.of(context).disabledColor.withAlpha(18), 
+          width: 2
         ),
-        child: Column(children: [
-
-          Expanded(
-            flex: 5,
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(Dimensions.radiusDefault)),
-              child: Stack(
-                children: [
-                  _chewieController != null &&  _chewieController!.videoPlayerController.value.isInitialized ? Stack(
-                    children: [
-                      Container(color: Colors.black, child: Chewie(controller: _chewieController!)),
-                    ],
-                  ) : const Center(child: CircularProgressIndicator()),
-                ],
-              ),
+      ),
+      child: Column(children: [
+        Expanded(
+          flex: 5,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(
+              top: Radius.circular(Dimensions.radiusDefault)
+            ),
+            child: Stack(
+              children: [
+                if (_isLoading)
+                  const Center(child: CircularProgressIndicator())
+                else if (_hasError)
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.error, color: Colors.red, size: 40),
+                        const SizedBox(height: 8),
+                        Text(
+                          'No se pudo cargar el video',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ],
+                    ),
+                  )
+                else if (_chewieController != null && _videoPlayerController != null && _videoPlayerController!.value.isInitialized)
+                  Container(
+                    color: Colors.black,
+                    child: Chewie(controller: _chewieController!),
+                  ),
+              ],
             ),
           ),
-
-          Expanded(
-            flex: 3,
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                Text(
-                  widget.advertisement.title ?? '',
-                  style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge, fontWeight: FontWeight.w600),
-                  maxLines: 1, overflow: TextOverflow.ellipsis,
+        ),
+        
+        Expanded(
+          flex: 3,
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(
+                widget.advertisement.title ?? '',
+                style: robotoMedium.copyWith(
+                  fontSize: Dimensions.fontSizeLarge, 
+                  fontWeight: FontWeight.w600
                 ),
-                const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                maxLines: 1, 
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
-                  Expanded(
-                    child: Text(
-                      widget.advertisement.description ?? '',
-                      style: robotoRegular.copyWith(fontSize: Dimensions.fontSizeSmall, color: Theme.of(context).hintColor),
-                      maxLines: 2, overflow: TextOverflow.ellipsis,
+              Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Expanded(
+                  child: Text(
+                    widget.advertisement.description ?? '',
+                    style: robotoRegular.copyWith(
+                      fontSize: Dimensions.fontSizeSmall, 
+                      color: Theme.of(context).hintColor
                     ),
+                    maxLines: 2, 
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  const SizedBox(width: Dimensions.paddingSizeDefault),
+                ),
+                const SizedBox(width: Dimensions.paddingSizeDefault),
 
-                  InkWell(
-                    onTap: (){
-                      Get.toNamed(RouteHelper.getStoreRoute(id: widget.advertisement.storeId, page: 'store'),
-                        arguments: StoreScreen(store: Store(id: widget.advertisement.storeId), fromModule: false),
+                InkWell(
+                  onTap: () {
+                    // Detener el video antes de navegar
+                    _stopVideo();
+                    
+                    // Pequeño retraso para asegurar que se detuvo
+                    Future.delayed(Duration.zero, () {
+                      Get.toNamed(
+                        RouteHelper.getStoreRoute(id: widget.advertisement.storeId, page: 'store'),
+                        arguments: StoreScreen(
+                          store: Store(id: widget.advertisement.storeId), 
+                          fromModule: false
+                        ),
                       );
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(7),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColor,
-                        borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
-                      ),
-                      child: Icon(Icons.arrow_forward, color: Theme.of(context).cardColor, size: 20),
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(7),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
+                    ),
+                    child: Icon(
+                      Icons.arrow_forward, 
+                      color: Theme.of(context).cardColor, 
+                      size: 20
                     ),
                   ),
-
-                ]),
-
+                ),
               ]),
-            ),
+            ]),
           ),
-
-        ]),
-      );
-    });
+        ),
+      ]),
+    );
   }
 }
 

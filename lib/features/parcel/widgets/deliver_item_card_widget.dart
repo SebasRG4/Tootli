@@ -14,17 +14,16 @@ class DeliverItemCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      
       padding: const EdgeInsets.all(Dimensions.paddingSizeSmall),
       decoration: BoxDecoration(
         color: isDeliverItem ? Theme.of(context).primaryColor.withValues(alpha: 0.05) : Theme.of(context).cardColor.withValues(alpha: 0.5),
         border: Border.all(color: isDeliverItem ? Theme.of(context).primaryColor.withValues(alpha: 0.1) : Theme.of(context).cardColor),
         borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
       ),
-      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        CustomImage(
-          image: image,
-          height: 30, width: 30,
-        ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start, children: [
+        
         const SizedBox(width: Dimensions.paddingSizeSmall),
 
         Expanded(
@@ -35,11 +34,14 @@ class DeliverItemCardWidget extends StatelessWidget {
             Text(
               description,
               maxLines: 2, overflow: TextOverflow.ellipsis,
-              style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
+              style: robotoRegular.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeSmall),
             ),
           ]),
         ),
-
+CustomImage(
+          image: image,
+          height: 30, width: 30,
+        ),
       ]),
     );
   }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sixam_mart/util/images.dart';
 import 'package:flutter/cupertino.dart';
+// ignore: depend_on_referenced_packages
 import 'package:cached_network_image_platform_interface/cached_network_image_platform_interface.dart';
 
 class CustomImage extends StatelessWidget {
