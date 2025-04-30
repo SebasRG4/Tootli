@@ -12,10 +12,12 @@ class CustomInkWell extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
+      
       child: InkWell(
         onTap: (onTap == null) ? null : () {
           Future.delayed(const Duration(milliseconds: 100), () => onTap!());
         },
+        
         borderRadius: BorderRadius.circular(radius ?? 0.0),
         highlightColor: highlightColor ?? Theme.of(context).hintColor.withValues(alpha: 0.2),
         hoverColor: Theme.of(context).hintColor.withValues(alpha: 0.02),

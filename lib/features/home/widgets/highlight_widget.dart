@@ -412,7 +412,7 @@ class _HighlightVideoWidgetState extends State<HighlightVideoWidget> {
       aspectRatio: aspectRatio,
       allowMuting: true,
       errorBuilder: (context, errorMessage) {
-        return Center(
+        return const Center(
           child: Text(
             'Error al cargar el video',
             style: TextStyle(color: Colors.white),
@@ -481,12 +481,12 @@ class _HighlightVideoWidgetState extends State<HighlightVideoWidget> {
                 if (_isLoading)
                   const Center(child: CircularProgressIndicator())
                 else if (_hasError)
-                  Center(
+                  const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.error, color: Colors.red, size: 40),
-                        const SizedBox(height: 8),
+                        SizedBox(height: 8),
                         Text(
                           'No se pudo cargar el video',
                           style: TextStyle(color: Colors.white),

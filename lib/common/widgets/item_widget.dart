@@ -113,13 +113,17 @@ class ItemWidget extends StatelessWidget {
             },
 
             radius: Dimensions.radiusDefault,
+            
 
-          padding: ResponsiveHelper.isDesktop(context) ? 
+            padding: 
+            ResponsiveHelper.isDesktop(context) ? 
             EdgeInsets.all(fromCartSuggestion ? 
             Dimensions.paddingSizeExtraSmall : Dimensions.paddingSizeSmall) : 
             const EdgeInsets.symmetric(horizontal: Dimensions.paddingSizeDefault, 
+            vertical: Dimensions.paddingSizeDefault),
             
-            vertical: Dimensions.paddingSizeExtraSmall),
+
+            
 
             child: TextHover(
               builder: (hovered) {
@@ -132,7 +136,7 @@ class ItemWidget extends StatelessWidget {
                       
                       children: [
 
-// IMAGEN DEL PRODUCTO
+                      // IMAGEN DEL PRODUCTO
                       Stack(children: [
                         // Imagen de producto
                         ClipRRect(
