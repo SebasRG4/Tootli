@@ -398,7 +398,7 @@ class CategoryShimmer extends StatelessWidget {
               width: 80,
               child: Column(children: [
                 Container(
-                  height: 75, width: 75,
+                  height: 100, width: 75,
                   margin: EdgeInsets.only(
                     left: index == 0 ? 0 : Dimensions.paddingSizeExtraSmall,
                     right: Dimensions.paddingSizeExtraSmall,
@@ -449,7 +449,7 @@ class FoodCategoryShimmer extends StatelessWidget {
               ClipOval(
                 child: Shimmer(
                   child: Container(
-                    height: 60, width: double.infinity,
+                    height: 120, width: double.infinity,
                     margin: const EdgeInsets.only(bottom: Dimensions.paddingSizeSmall),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,

@@ -43,7 +43,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/features/home/widgets/module_view.dart';
 import 'package:sixam_mart/features/parcel/screens/parcel_category_screen.dart';
-import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
+//import 'package:sixam_mart/features/cart/controllers/cart_controller.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

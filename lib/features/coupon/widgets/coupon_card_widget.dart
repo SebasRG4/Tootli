@@ -24,6 +24,7 @@ class CouponCardWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Stack(children: [
 
+      // Diseño del cupon
       ClipRRect(
         borderRadius: BorderRadius.circular(Dimensions.radiusSmall),
         child: Transform.rotate(
@@ -52,7 +53,7 @@ class CouponCardWidget extends StatelessWidget {
               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
               Text(
-                '${coupon.discount}${coupon.discountType == 'percent' ? '%' : Get.find<SplashController>().configModel!.currencySymbol} ${'off'.tr}',
+                '${coupon.discount}${coupon.discountType == 'percent' ? '%' : Get.find<SplashController>().configModel!.currencySymbol}',
                 style: robotoBold.copyWith(fontSize: Dimensions.fontSizeDefault),
               ),
               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
@@ -72,31 +73,37 @@ class CouponCardWidget extends StatelessWidget {
           const SizedBox(width: 40),
 
           Expanded(
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+            child: Column(crossAxisAlignment: 
+            CrossAxisAlignment.start, 
+            mainAxisAlignment: MainAxisAlignment.center, 
+            children: [
 
-              Text(
-                '${coupon.title}',
-                style: robotoRegular, textDirection: TextDirection.ltr,
-                maxLines: 1, overflow: TextOverflow.ellipsis,
+              Center(
+                child: Text(
+                  '${coupon.title}',
+                  style: robotoMedium, textDirection: TextDirection.ltr,
+                  maxLines: 1, overflow: TextOverflow.ellipsis,
+                ),
               ),
               const SizedBox(height: Dimensions.paddingSizeExtraSmall),
 
-              Text(
+              // Fecha de cupon
+              /*Text(
                 '${DateConverter.stringToReadableString(coupon.startDate!)} ${'to'.tr} ${DateConverter.stringToReadableString(coupon.expireDate!)}',
                 style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeSmall),
                 maxLines: 2, overflow: TextOverflow.ellipsis,
-              ),
+              ),*/
 
               Row(children: [
                 Text(
                   '*${'min_purchase'.tr} ',
-                  style: robotoRegular.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeExtraSmall),
+                  style: robotoMedium.copyWith(color: Theme.of(context).primaryColorDark, fontSize: Dimensions.fontSizeExtraSmall),
                   maxLines: 2, overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(width: Dimensions.paddingSizeExtraSmall),
                 Text(
                   PriceConverter.convertPrice(coupon.minPurchase),
-                  style: robotoMedium.copyWith(color: Theme.of(context).disabledColor, fontSize: Dimensions.fontSizeExtraSmall),
+                  style: robotoMedium.copyWith(color: Theme.of(context).primaryColor, fontSize: Dimensions.fontSizeExtraSmall),
                   maxLines: 1, overflow: TextOverflow.ellipsis, textDirection: TextDirection.ltr,
                 ),
               ]),

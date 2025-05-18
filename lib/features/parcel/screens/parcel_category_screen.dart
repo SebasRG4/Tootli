@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:shimmer_animation/shimmer_animation.dart';
 import 'package:sixam_mart/common/widgets/custom_ink_well.dart';
 import 'package:sixam_mart/features/banner/controllers/banner_controller.dart';
-import 'package:sixam_mart/features/language/controllers/language_controller.dart';
+//import 'package:sixam_mart/features/language/controllers/language_controller.dart';
 import 'package:sixam_mart/features/profile/controllers/profile_controller.dart';
 import 'package:sixam_mart/features/home/widgets/web/module_widget.dart';
 import 'package:sixam_mart/features/parcel/controllers/parcel_controller.dart';

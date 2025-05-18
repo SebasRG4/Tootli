@@ -148,6 +148,17 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                         ),
                         const Divider(height: 20, thickness: 2),
 
+                        (itemController.item!.description != null && itemController.item!.description!.isNotEmpty) ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('description'.tr, style: robotoMedium),
+                            const SizedBox(height: Dimensions.paddingSizeExtraSmall),
+                            Text(itemController.item!.description!, style: robotoRegular),
+                            const SizedBox(height: Dimensions.paddingSizeLarge),
+                          ],
+                        ) 
+                        : const SizedBox(),
+
                         // Variation
                         ListView.builder(
                           shrinkWrap: true,
@@ -271,15 +282,7 @@ class _ItemDetailsScreenState extends State<ItemDetailsScreen> {
                           ),
                         ) : const SizedBox(),
 
-                        (itemController.item!.description != null && itemController.item!.description!.isNotEmpty) ? Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('description'.tr, style: robotoMedium),
-                            const SizedBox(height: Dimensions.paddingSizeExtraSmall),
-                            Text(itemController.item!.description!, style: robotoRegular),
-                            const SizedBox(height: Dimensions.paddingSizeLarge),
-                          ],
-                        ) : const SizedBox(),
+                        
 
                         (widget.item!.nutritionsName != null && widget.item!.nutritionsName!.isNotEmpty) ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sixam_mart/common/controllers/theme_controller.dart';
@@ -14,7 +16,7 @@ import 'package:sixam_mart/features/home/widgets/views/just_for_you_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/most_popular_item_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/new_on_mart_view.dart';
 import 'package:sixam_mart/features/home/widgets/views/special_offer_view.dart';
-import 'package:sixam_mart/features/home/widgets/views/visit_again_view.dart';
+//import 'package:sixam_mart/features/home/widgets/views/visit_again_view.dart';
 import 'package:sixam_mart/features/home/widgets/banner_view.dart';
 
 class FoodHomeScreen extends StatelessWidget {

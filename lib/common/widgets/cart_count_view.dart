@@ -79,12 +79,14 @@ class CartCountView extends StatelessWidget {
           Get.find<ItemController>().itemDirectlyAddToCart(item, context);
         },
         child: child ?? Container(
-          height: 25, width: 25,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle, color: Theme.of(context).cardColor,
-            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
+          height: 26, width: 26,
+          decoration:  BoxDecoration(
+             borderRadius: BorderRadius.circular(10),
+             color: Colors.lightGreen
+            //shape: BoxShape.circle, color: Colors.blueAccent,
+            //boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
           ),
-          child: Icon(Icons.add, size: 20, color: Theme.of(context).primaryColor),
+          child: const Icon(Icons.add, size: 20, color: Colors.white),
         ),
       );
     });

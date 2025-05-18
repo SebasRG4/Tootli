@@ -80,7 +80,11 @@ class ItemWidget extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
             color: Theme.of(context).cardColor,
-            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
+            border: Border.all(
+              color: Colors.grey[300]!,
+              width: 1,
+            )
+            //boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 5, spreadRadius: 1)],
           ),
           child: CustomInkWell(
             onTap: () {
@@ -131,22 +135,21 @@ class ItemWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center, 
                   children: [
                     Expanded(child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: desktop ? 0 : 0),
-                    child: Row(
+                    padding: const EdgeInsets.all(0),
+                    //padding: EdgeInsets.symmetric(vertical: desktop ? 0 : 0),
+                    child: Column(
                       
                       children: [
-
-                      // IMAGEN DEL PRODUCTO
+                      // Imagen del producto
                       Stack(children: [
-                        // Imagen de producto
                         ClipRRect(
                           borderRadius: BorderRadius.circular(Dimensions.radiusDefault),
                           child: CustomImage(
                             isHovered: hovered,
                             image: '${isStore ? store != null ? store!.logoFullUrl : '' : item!.imageFullUrl}',
                             height: imageHeight ?? 
-                            (desktop ? 120 : length == null ? 100 : 90), 
-                            width: imageWidth ?? (desktop ? 120 : 90), fit: BoxFit.cover,
+                            (desktop ? 120 : length == null ? 110 : 100), 
+                            width: imageWidth ?? (desktop ? 160 : 150), fit: BoxFit.cover,
                           ),
                         ),
 
@@ -160,7 +163,7 @@ class ItemWidget extends StatelessWidget {
                         isAvailable ? const SizedBox() : NotAvailableWidget(isStore: isStore),
 
                         Positioned(
-                          top: 5, left: 5,
+                          top: 5, right: 5,
                           child: GetBuilder<FavouriteController>(builder: (favouriteController) {
                             bool isWished = isStore ? favouriteController.wishStoreIdList.contains(store!.id) : favouriteController.wishItemIdList.contains(item!.id);
                             return CustomFavouriteWidget(
@@ -171,8 +174,9 @@ class ItemWidget extends StatelessWidget {
                             );
                           }),
                         ),
+
                       ]),
-                      //const SizedBox(width: Dimensions.paddingSizeSmall),
+                      const SizedBox(height: Dimensions.paddingSizeDefault),
 
                       Expanded(
                         child: 
@@ -211,9 +215,9 @@ class ItemWidget extends StatelessWidget {
 
                           (isStore ? store!.address != null : item!.storeName != null) ? Text(
                             isStore ? store!.address ?? '' : item!.storeName ?? '',
-                            style: robotoRegular.copyWith(
+                            style: robotoMedium.copyWith(
                               fontSize: Dimensions.fontSizeExtraSmall,
-                              color: Theme.of(context).disabledColor,
+                              color: Colors.lightGreen,
                             ),
                             maxLines: 1, overflow: TextOverflow.ellipsis,
                           ) : const SizedBox(),
@@ -272,7 +276,7 @@ class ItemWidget extends StatelessWidget {
                           ]) : Row(children: [
                             Text(
                               PriceConverter.convertPrice(item!.price, discount: discount, discountType: discountType),
-                              style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeSmall), textDirection: TextDirection.ltr,
+                              style: robotoMedium.copyWith(fontSize: Dimensions.fontSizeLarge), textDirection: TextDirection.ltr,
                             ),
                             SizedBox(width: discount! > 0 ? Dimensions.paddingSizeExtraSmall : 0),
 
@@ -283,22 +287,30 @@ class ItemWidget extends StatelessWidget {
                                 color: Theme.of(context).disabledColor,
                                 decoration: TextDecoration.lineThrough,
                               ), textDirection: TextDirection.ltr,
-                            ) : const SizedBox(),
+                            ) : 
+                            //const SizedBox(width: 20,),
+                            const Spacer(),
+                            // Boton de agregar al carrito
+                        CartCountView(
+                          item: item!,
+                          index: index,
+                        ),
                           ]),
 
                         ]),
                       ),
 
-                      Column(mainAxisAlignment: isStore ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween, children: [
+                      /*Column(mainAxisAlignment: isStore ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween, children: [
 
                         const SizedBox(),
 
+                        // Boton de agregar al carrito
                         CartCountView(
                           item: item!,
                           index: index,
                         ),
 
-                      ]),
+                      ]),*/
 
                     ]),
                   )),
